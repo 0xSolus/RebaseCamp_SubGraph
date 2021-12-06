@@ -1,0 +1,41 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Contract
+    network: mainnet
+    source:
+      address: "0x04F2694C8fcee23e8Fd0dfEA1d4f5Bb8c352111F"
+      abi: Contract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - LogRebase
+        - LogStakingContractUpdated
+        - LogSupply
+        - OwnershipPulled
+        - OwnershipPushed
+        - Transfer
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: LogRebase(indexed uint256,uint256,uint256)
+          handler: handleLogRebase
+        - event: LogStakingContractUpdated(address)
+          handler: handleLogStakingContractUpdated
+        - event: LogSupply(indexed uint256,uint256,uint256)
+          handler: handleLogSupply
+        - event: OwnershipPulled(indexed address,indexed address)
+          handler: handleOwnershipPulled
+        - event: OwnershipPushed(indexed address,indexed address)
+          handler: handleOwnershipPushed
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
